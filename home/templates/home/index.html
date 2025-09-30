@@ -1,0 +1,14 @@
+{% extends "home/base.html" %}
+
+{% block title %}主页{% endblock %}
+
+{% block content %}
+<div class="grid">
+    {% for card in cards %}
+    <a href="{{ card.url }}" class="card">
+        <h2>{{ card.title }}</h2>
+        <p>{{ card.desc }}</p>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

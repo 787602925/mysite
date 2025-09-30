@@ -1,0 +1,100 @@
+/* 基础配色（鲜艳渐变 + 霓虹强调） */
+:root {
+    --bg-start: #00c6ff;
+    --bg-end: #0072ff;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --muted-text: #5a5a5a;
+    --primary: #6a00ff;
+    --primary-contrast: #ffffff;
+    --glow: 0 8px 30px rgba(238, 9, 121, 0.35);
+}
+
+/* 流式排版与安全边距 */
+html {
+    font-size: clamp(14px, 1.6vw, 18px);
+}
+
+body {
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "Helvetica Neue", sans-serif;
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    color: var(--text);
+    margin: 0;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+header, footer {
+    color: var(--primary-contrast);
+    text-align: center;
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+header h1 {
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+
+main {
+    padding: clamp(1rem, 4vw, 3rem);
+}
+
+/* 自适应网格 */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+}
+
+/* 卡片样式：鲜艳边框与霓虹悬浮 */
+.card {
+    display: block;
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    padding: clamp(1rem, 3vw, 1.5rem);
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.card h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.card p {
+    margin: 0;
+    color: var(--muted-text);
+    line-height: 1.6;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--glow);
+    border-color: rgba(106, 0, 255, 0.4);
+}
+
+/* 小屏适配 */
+@media (max-width: 480px) {
+    header h1 { font-size: 1.4rem; }
+    .card h2 { font-size: 1.1rem; }
+    .grid { grid-template-columns: 1fr; }
+}
+
+/* 大屏增强 */
+@media (min-width: 1200px) {
+    .grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+
+/* 触控设备更大的可点击区域 */
+@media (hover: none) {
+    .card { padding: 1.25rem; }
+}
