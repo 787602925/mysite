@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>{% block title %}我的网站{% endblock %}</title>
+    <link rel="icon" href="{% static 'home/favicon.svg' %}" type="image/svg+xml">
+    <link rel="alternate icon" href="{% static 'home/favicon.svg' %}">
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <header>
-        <h1>我的个人网站</h1>
+        <a class="home-btn" href="/" aria-label="返回首页">
+            <img src="{% static 'home/home.svg' %}" alt="" width="28" height="28">
+        </a>
+        <h1>{% block site_title %}我的个人网站{% endblock %}</h1>
     </header>
 
     <main>

@@ -38,6 +38,35 @@ header h1 {
     text-shadow: 0 2px 16px rgba(0,0,0,0.25);
 }
 
+/* 返回首页按钮 */
+header {
+    position: relative;
+}
+
+.home-btn {
+    position: absolute;
+    left: clamp(0.75rem, 2.5vw, 1.25rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.home-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.25);
+}
+
 main {
     padding: clamp(1rem, 4vw, 3rem);
 }
@@ -48,6 +77,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: clamp(1rem, 3vw, 2rem);
 }
+
 
 /* 卡片样式：鲜艳边框与霓虹悬浮 */
 .card {
@@ -76,6 +106,7 @@ main {
     line-height: 1.6;
 }
 
+
 .card:hover {
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--glow);
@@ -98,3 +129,4 @@ main {
 @media (hover: none) {
     .card { padding: 1.25rem; }
 }
+

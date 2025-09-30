@@ -1,0 +1,64 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}秋招面板{% endblock %}
+{% block site_title %}秋招{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'autumn/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="autumn">
+    <form method="post" class="autumn-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add">
+        <div class="row">
+            <input name="company" placeholder="公司" required>
+            <input name="position" placeholder="职位">
+            <input name="url" placeholder="网址" type="url">
+            <select name="status">
+                {% for s in statuses %}
+                <option value="{{ s }}">{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row-full">
+            <textarea name="note" placeholder="备注" rows="3"></textarea>
+            <button type="submit" class="submit">添加</button>
+        </div>
+    </form>
+
+    <div class="grid grid-autumn">
+        {% for it in items %}
+        <div class="card">
+            <h2>{{ it.company }}{% if it.position %} · {{ it.position }}{% endif %}</h2>
+            {% if it.url %}<p><a href="{{ it.url }}" target="_blank" rel="noopener noreferrer">官网/职位链接</a></p>{% endif %}
+            <p>进度：<strong>{{ it.status }}</strong></p>
+            {% if it.note %}<p class="muted">{{ it.note }}</p>{% endif %}
+            <div class="actions">
+                <form method="post" style="display:inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="doc_id" value="{{ it.doc_id }}">
+                    <select name="status">
+                        {% for s in statuses %}
+                        <option value="{{ s }}" {% if s == it.status %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">更新</button>
+                </form>
+                <form method="post" style="display:inline" onsubmit="return confirm('确定删除该记录？')">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="doc_id" value="{{ it.doc_id }}">
+                    <button type="submit">删除</button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <p class="muted">还没有记录，先添加一条吧～</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

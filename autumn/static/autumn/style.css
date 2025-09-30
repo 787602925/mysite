@@ -1,0 +1,82 @@
+/* Autumn 页面私有样式 */
+
+/* 限制卡片最多两列，移动端单列 */
+.grid.grid-autumn {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+    .grid.grid-autumn { grid-template-columns: 1fr; }
+}
+
+/* 表单布局 */
+.autumn .autumn-form .row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr 2fr;
+    gap: clamp(0.5rem, 2vw, 1rem);
+    margin-bottom: clamp(0.75rem, 2.5vw, 1rem);
+}
+
+.autumn .autumn-form .row-full {
+    display: grid;
+    grid-template-columns: 1fr; /* 备注独占一行，按钮下一行 */
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+    align-items: start;
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+}
+
+.autumn input, .autumn select, .autumn button {
+    height: 44px;
+    padding: 0 0.8rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.08);
+    outline: none;
+    font-size: 0.95rem;
+}
+
+.autumn input, .autumn select {
+    background: rgba(255,255,255,0.9);
+    transition: box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.autumn input:focus, .autumn select:focus {
+    border-color: rgba(0, 114, 255, 0.4);
+    box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.12);
+}
+
+.autumn .autumn-form .row-full textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.9);
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 88px;
+    box-sizing: border-box;
+}
+
+.autumn .autumn-form .row-full .submit {
+    height: 44px;
+    padding: 0 1.25rem;
+    border-radius: 12px;
+    border: 2px solid rgba(0, 114, 255, 0.35);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    justify-self: center; /* 居中 */
+    display: inline-flex;
+    align-items: center;
+}
+
+.autumn .actions {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 备注换行与左对齐 */
+.grid-autumn .card .muted { white-space: pre-wrap; text-align: left; }
+
