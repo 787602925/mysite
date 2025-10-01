@@ -78,5 +78,53 @@
 }
 
 /* 备注换行与左对齐 */
-.grid-autumn .card .muted { white-space: pre-wrap; text-align: left; }
+.grid-autumn .card__note { 
+    white-space: pre-wrap; 
+    text-align: left; 
+}
+
+/* 行内编辑样式 - BEM 命名 */
+.card__edit-mode { display: none; }
+.card__edit-form { text-align: left; }
+.card__edit-row { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 0.5rem; 
+    margin-bottom: 0.75rem; 
+}
+.card__input, .card__select, .card__textarea {
+    height: 36px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.15);
+    font-size: 0.9rem;
+}
+.card__textarea { 
+    height: auto; 
+    min-height: 120px; 
+    max-height: none;
+    resize: vertical; 
+    grid-column: 1 / -1; 
+    overflow-y: auto;
+    line-height: 1.4;
+    width: 100%;
+    box-sizing: border-box;
+}
+.card__edit-actions { 
+    display: flex; 
+    gap: 0.5rem; 
+    justify-content: center; 
+    margin-top: 0.75rem; 
+}
+.card__button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.card__button--edit { background: #007bff; color: white; border-color: #007bff; }
+.card__button--save { background: #28a745; color: white; border-color: #28a745; }
+.card__button--cancel { background: #6c757d; color: white; border-color: #6c757d; }
+.card__button--delete { background: #dc3545; color: white; border-color: #dc3545; }
 

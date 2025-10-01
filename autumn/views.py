@@ -1,20 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from pathlib import Path
-
-try:
-    from tinydb import TinyDB, Query
-except Exception:  # pragma: no cover
-    TinyDB = None  # type: ignore
-    Query = None  # type: ignore
-
-DB_PATH = Path(__file__).resolve().parent / 'data.json'
-
-
-def get_db():
-    if TinyDB is None:
-        raise RuntimeError('TinyDB is not installed. Run: pip install tinydb')
-    return TinyDB(DB_PATH)
+from .storage import list_items, insert_item, remove_item, update_status, update_item
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -31,33 +17,45 @@ def index(request: HttpRequest) -> HttpResponse:
             status = (request.POST.get('status') or '').strip()
             note = (request.POST.get('note') or '').strip()
             if company:
-                with get_db() as db:
-                    db.insert({
-                        'company': company,
-                        'position': position,
-                        'url': url,
-                        'status': status or '已投',
-                        'note': note,
-                    })
+                insert_item({
+                    'company': company,
+                    'position': position,
+                    'url': url,
+                    'status': status or '已投',
+                    'note': note,
+                })
             return redirect('autumn')
 
         if action == 'delete':
             doc_id = request.POST.get('doc_id')
             if doc_id and doc_id.isdigit():
-                with get_db() as db:
-                    db.remove(doc_ids=[int(doc_id)])
+                remove_item(int(doc_id))
             return redirect('autumn')
 
         if action == 'update':
             doc_id = request.POST.get('doc_id')
             new_status = (request.POST.get('status') or '').strip()
             if doc_id and doc_id.isdigit() and new_status:
-                with get_db() as db:
-                    db.update({'status': new_status}, doc_ids=[int(doc_id)])
+                update_status(int(doc_id), new_status)
             return redirect('autumn')
 
-    with get_db() as db:
-        items = list(db)
+        if action == 'edit':
+            doc_id = request.POST.get('doc_id')
+            if doc_id and doc_id.isdigit():
+                fields = {
+                    'company': (request.POST.get('company') or '').strip(),
+                    'position': (request.POST.get('position') or '').strip(),
+                    'url': (request.POST.get('url') or '').strip(),
+                    'status': (request.POST.get('status') or '').strip(),
+                    'note': request.POST.get('note') or '',  # 不 strip() 以保留换行符
+                }
+                # 过滤空值以避免覆盖成空字符串（仅在用户确实提交了该字段时更新）
+                fields = {k: v for k, v in fields.items() if v != ''}
+                if fields:
+                    update_item(int(doc_id), fields)
+            return redirect('autumn')
+
+    items = list_items()
 
     return render(request, 'autumn/index.html', {
         'items': items,
