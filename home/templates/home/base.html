@@ -8,9 +8,11 @@
     <link rel="icon" href="{% static 'home/favicon.svg' %}" type="image/svg+xml">
     <link rel="alternate icon" href="{% static 'home/favicon.svg' %}">
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/chatbot.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    {% include "partials/chatbot.html" %}
     <header>
         <a class="home-btn" href="/" aria-label="返回首页">
             <img src="{% static 'home/home.svg' %}" alt="" width="28" height="28">
@@ -25,5 +27,6 @@
     <footer>
         <p>© 2025 kehao</p>
     </footer>
+    <script src="{% static 'home/js/chatbot.js' %}"></script>
 </body>
 </html>
